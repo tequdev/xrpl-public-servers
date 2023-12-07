@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 
-const retiredAmendments = [
+const retired = [
   "MultiSign",
   "TrustSetAuth",
   "FeeEscalation",
@@ -25,8 +25,19 @@ const obsolete = [
   "fixNFTokenNegOffer",
 ]
 
+const xahau = [
+  "Hooks",
+  "BalanceRewards",
+  "PaychanAndEscrowForTokens",
+  "URIToken",
+  "Import",
+  "XahauGenesis",
+  "HooksUpdate1",
+  "fixURITokenV1",
+]
+
 const amendments = [
-  ...retiredAmendments,
+  ...retired,
   ...obsolete,
   "OwnerPaysFee",
   "Flow",
@@ -74,16 +85,7 @@ const amendments = [
   "fixDisallowIncomingV1",
   "DID",
   "fixFillOrKill",
-
-  // xahau
-  "Hooks",
-  "BalanceRewards",
-  "PaychanAndEscrowForTokens",
-  "URIToken",
-  "Import",
-  "XahauGenesis",
-  "HooksUpdate1",
-  "fixURITokenV1",
+  ...xahau
 ]
 
 const amendmentInfo = amendments.reduce((prev, curr) => {
