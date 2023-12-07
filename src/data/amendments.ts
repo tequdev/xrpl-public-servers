@@ -34,7 +34,7 @@ const xahau = [
   "XahauGenesis",
   "HooksUpdate1",
   "fixURITokenV1",
-]
+] as const
 
 export const amendments = [
   ...obsolete,

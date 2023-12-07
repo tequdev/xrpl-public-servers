@@ -1,6 +1,10 @@
+'use client'
 import { Link, Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname()
+  
   return (
     <Navbar>
       <NavbarBrand>
@@ -8,12 +12,12 @@ export default function Header() {
       </NavbarBrand>
       <NavbarContent>
         <NavbarItem>
-          <Link color="foreground" href="/">
+          <Link color={pathname==='/'?'primary': 'foreground'} href="/">
             Specific
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link href="/list" >
+          <Link color={pathname==='/list'?'primary': 'foreground'} href="/list" >
             All
           </Link>
         </NavbarItem>
