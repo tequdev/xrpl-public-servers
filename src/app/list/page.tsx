@@ -32,43 +32,37 @@ export default function Home() {
   const [networkAmendments, setNetworkAmendments] = useState(initialNetworkAmendment)
 
   useEffect(() => {
-    networkData.map(network => {
+    networkData.forEach(network => {
       const client = new XrplClient(network.server)
-      client.ready().then(() => {
-        client.send({
-          command: 'ledger_entry',
-          index: '7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4'
-        }).then((res => {
-          const { Majorities, Amendments } = res.node
-            ; (Amendments as string[]).forEach((amendmentId) => {
-              const amendmentName = getAmendmentName(amendmentId)
-              setNetworkAmendments((prevState) => {
-                const hasAmendment = (amendmentName in prevState)
-                if (!hasAmendment) {
-                  return { [amendmentName]: networkData.reduce((prev, cur) => ({ ...prev, [getNetworkKey(cur)]: { enabled: getNetworkKey(network) === getNetworkKey(cur), majority: false } }), {}), ...prevState }
-                } else {
-                  return { ...prevState, [amendmentName]: { ...prevState[amendmentName], [getNetworkKey(network)]: { enabled: true, majority: false } } }
-                }
-              })
-            })
-            ; (Majorities as { Amendment: string, CloseTime: number }[]).forEach((majority) => {
-              const amendmentName = getAmendmentName(majority.Amendment)
-              setNetworkAmendments((prevState) => {
-                const hasAmendment = (amendmentName in prevState)
-                if (!hasAmendment) {
-                  return { [amendmentName]: networkData.reduce((prev, cur) => ({ ...prev, [getNetworkKey(cur)]: { enabled: false, majority: getNetworkKey(network) === getNetworkKey(cur) } }), {}), ...prevState }
-                } else {
-                  return { ...prevState, [amendmentName]: { ...prevState[amendmentName], [getNetworkKey(network)]: { enabled: false, majority: true } } }
-                }
-              })
-            })
-
-          client.close()
-        }))
-      })
-      return () => {
+      client.send({
+        command: 'ledger_entry',
+        index: '7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4'
+      }).then((res => {
         client.close()
-      }
+        const { Majorities, Amendments } = res.node
+          ; (Amendments as string[]).forEach((amendmentId) => {
+            const amendmentName = getAmendmentName(amendmentId)
+            setNetworkAmendments((prevState) => {
+              const hasAmendment = (amendmentName in prevState)
+              if (!hasAmendment) {
+                return { [amendmentName]: networkData.reduce((prev, cur) => ({ ...prev, [getNetworkKey(cur)]: { enabled: getNetworkKey(network) === getNetworkKey(cur), majority: false } }), {}), ...prevState }
+              } else {
+                return { ...prevState, [amendmentName]: { ...prevState[amendmentName], [getNetworkKey(network)]: { enabled: true, majority: false } } }
+              }
+            })
+          })
+          ; (Majorities as { Amendment: string, CloseTime: number }[]).forEach((majority) => {
+            const amendmentName = getAmendmentName(majority.Amendment)
+            setNetworkAmendments((prevState) => {
+              const hasAmendment = (amendmentName in prevState)
+              if (!hasAmendment) {
+                return { [amendmentName]: networkData.reduce((prev, cur) => ({ ...prev, [getNetworkKey(cur)]: { enabled: false, majority: getNetworkKey(network) === getNetworkKey(cur) } }), {}), ...prevState }
+              } else {
+                return { ...prevState, [amendmentName]: { ...prevState[amendmentName], [getNetworkKey(network)]: { enabled: false, majority: true } } }
+              }
+            })
+          })
+      }))
     })
   }, [])
 
