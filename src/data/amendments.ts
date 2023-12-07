@@ -36,9 +36,9 @@ const xahau = [
   "fixURITokenV1",
 ]
 
-const amendments = [
-  ...retired,
+export const amendments = [
   ...obsolete,
+  ...retired,
   "OwnerPaysFee",
   "Flow",
   "FlowCross",
