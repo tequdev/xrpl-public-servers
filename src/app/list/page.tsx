@@ -58,8 +58,9 @@ export default function Home() {
               }
             })
           })
-          ; ((Majorities || []) as { Amendment: string, CloseTime: number }[]).forEach((majority) => {
-            const amendmentName = getAmendmentName(majority.Amendment)
+          ; ((Majorities || []) as Record<'Majority',{ Amendment: string, CloseTime: number }>[]).forEach((majority) => {
+            console.log({majority})
+            const amendmentName = getAmendmentName(majority.Majority.Amendment)
             setNetworkAmendments((prevState) => {
               const hasAmendment = (amendmentName in prevState)
               if (!hasAmendment) {
