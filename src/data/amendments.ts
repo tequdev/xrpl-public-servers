@@ -35,7 +35,7 @@ const xahau = [
   "HooksUpdate1",
   "fixXahauV1",  
   "fixXahauV2",
-  // "Remit",
+  "Remit",
 ]
 
 export const amendments = [
