@@ -33,7 +33,9 @@ const xahau = [
   "Import",
   "XahauGenesis",
   "HooksUpdate1",
-  "fixXahauV1",
+  "fixXahauV1",  
+  "fixXahauV2",
+  // "Remit",
 ]
 
 export const amendments = [
@@ -94,5 +96,6 @@ const amendmentInfo = amendments.reduce((prev, curr) => {
 
 
 export const getAmendmentName = (id: string) => {
+  console.log(amendmentInfo[id.replace('\"', "")] || id)
   return amendmentInfo[id.replace('\"', "")] || id
 }
