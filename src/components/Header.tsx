@@ -10,7 +10,7 @@ export default function Header() {
       <NavbarBrand>
         <p className="font-bold text-inherit text-2xl text-center">XRPL Public Servers</p>
       </NavbarBrand>
-      <NavbarContent>
+      {/* <NavbarContent>
         <NavbarItem>
           <Link color={pathname==='/'?'primary': 'foreground'} href="/">
             Specific
@@ -21,7 +21,7 @@ export default function Header() {
             All
           </Link>
         </NavbarItem>
-      </NavbarContent>
+      </NavbarContent> */}
     </Navbar>
   )
 }
