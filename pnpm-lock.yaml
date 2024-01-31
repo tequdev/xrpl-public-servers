@@ -21,8 +21,8 @@ dependencies:
     specifier: ^18
     version: 18.2.0(react@18.2.0)
   xrpl-client:
-    specifier: ^2.2.0
-    version: 2.2.0
+    specifier: ^2.3.1
+    version: 2.3.1
 
 devDependencies:
   '@types/node':
@@ -5178,8 +5178,8 @@ packages:
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  /xrpl-client@2.2.0:
-    resolution: {integrity: sha512-lHblRPbtUKiQ+6cBjvIt4FeUvnhuOp4A0/v51PyxO2oPgEjFOUTE9Dw63/z9t+JiOtVn1o5Z46XjhXq9czbuBg==}
+  /xrpl-client@2.3.1:
+    resolution: {integrity: sha512-UyeYZvewX+n+OHpb1W7zutHWfS75Z45Ltz15OOMNhmxFnBPRbJJ0sMQRtk6jVoxuF7Id8kZ85IwifqKNByyMWw==}
     dependencies:
       debug: 4.3.4
       websocket: 1.0.34
