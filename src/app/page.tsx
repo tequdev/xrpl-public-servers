@@ -37,44 +37,48 @@ export default function Home() {
   useEffect(() => {
     networkData.forEach(network => {
       const client = new XrplClient(network.server)
-      const _1 = client.ready().then(() => {
-        console.log(client.getState())
-        setNetworkVersion((curr) => ({ ...curr, [getNetworkKey(network)]: client.getState().server.version }))
-        return
-      })
-      const _2 = client.send({
-        command: 'ledger_entry',
-        index: '7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4'
-      }).then((res => {
-        const { Majorities, Amendments } = res.node
-          console.log( Amendments)
-          ; (Amendments as string[]).forEach((amendmentId) => {
-            const amendmentName = getAmendmentName(amendmentId)
-            setNetworkAmendments((prevState) => {
-              const hasAmendment = (amendmentName in prevState)
-              if (!hasAmendment) {
-                return { [amendmentName]: networkData.reduce((prev, cur) => ({ ...prev, [getNetworkKey(cur)]: { enabled: getNetworkKey(network) === getNetworkKey(cur), majority: false } }), {}), ...prevState }
-              } else {
-                return { ...prevState, [amendmentName]: { ...prevState[amendmentName], [getNetworkKey(network)]: { enabled: true, majority: false } } }
-              }
-            })
-          })
-          ; ((Majorities || []) as Record<'Majority',{ Amendment: string, CloseTime: number }>[]).forEach((majority) => {
-            console.log({majority})
-            const amendmentName = getAmendmentName(majority.Majority.Amendment)
-            setNetworkAmendments((prevState) => {
-              const hasAmendment = (amendmentName in prevState)
-              if (!hasAmendment) {
-                return { [amendmentName]: networkData.reduce((prev, cur) => ({ ...prev, [getNetworkKey(cur)]: { enabled: false, majority: getNetworkKey(network) === getNetworkKey(cur) } }), {}), ...prevState }
-              } else {
-                return { ...prevState, [amendmentName]: { ...prevState[amendmentName], [getNetworkKey(network)]: { enabled: false, majority: true } } }
-              }
-            })
-          })
-        Promise.all([_1, _2]).then(() => {
-          client.close()
+      try {
+        const _1 = client.ready().then(() => {
+          console.log(client.getState())
+          setNetworkVersion((curr) => ({ ...curr, [getNetworkKey(network)]: client.getState().server.version }))
+          return
         })
-      }))
+        const _2 = client.send({
+          command: 'ledger_entry',
+          index: '7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4'
+        }).then((res => {
+          const { Majorities, Amendments } = res.node
+          console.log(Amendments)
+            ; (Amendments as string[]).forEach((amendmentId) => {
+              const amendmentName = getAmendmentName(amendmentId)
+              setNetworkAmendments((prevState) => {
+                const hasAmendment = (amendmentName in prevState)
+                if (!hasAmendment) {
+                  return { [amendmentName]: networkData.reduce((prev, cur) => ({ ...prev, [getNetworkKey(cur)]: { enabled: getNetworkKey(network) === getNetworkKey(cur), majority: false } }), {}), ...prevState }
+                } else {
+                  return { ...prevState, [amendmentName]: { ...prevState[amendmentName], [getNetworkKey(network)]: { enabled: true, majority: false } } }
+                }
+              })
+            })
+            ; ((Majorities || []) as Record<'Majority', { Amendment: string, CloseTime: number }>[]).forEach((majority) => {
+              console.log({ majority })
+              const amendmentName = getAmendmentName(majority.Majority.Amendment)
+              setNetworkAmendments((prevState) => {
+                const hasAmendment = (amendmentName in prevState)
+                if (!hasAmendment) {
+                  return { [amendmentName]: networkData.reduce((prev, cur) => ({ ...prev, [getNetworkKey(cur)]: { enabled: false, majority: getNetworkKey(network) === getNetworkKey(cur) } }), {}), ...prevState }
+                } else {
+                  return { ...prevState, [amendmentName]: { ...prevState[amendmentName], [getNetworkKey(network)]: { enabled: false, majority: true } } }
+                }
+              })
+            })
+          Promise.all([_1, _2]).then(() => {
+            client.close()
+          })
+        }))
+      } catch (e) {
+        client.close()
+      }
     })
   }, [])
 
