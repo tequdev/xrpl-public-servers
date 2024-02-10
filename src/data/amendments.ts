@@ -87,6 +87,8 @@ export const amendments = [
   "fixDisallowIncomingV1",
   "DID",
   "fixFillOrKill",
+  "fixNFTokenReserve",
+  "fixInnerObjTemplate",
   ...xahau
 ]
 
