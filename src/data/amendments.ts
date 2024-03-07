@@ -89,6 +89,7 @@ export const amendments = [
   "fixFillOrKill",
   "fixNFTokenReserve",
   "fixInnerObjTemplate",
+  "PriceOracle",
   ...xahau
 ]
 
