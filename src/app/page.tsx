@@ -6,12 +6,17 @@ import {
   TableBody,
   TableColumn,
   TableRow,
-  TableCell
+  TableCell,
+  Tx,
+  Tooltip,
+  Button
 } from "@nextui-org/react";
 import { NETWORKS } from '@/data/networks';
 import { getKeys } from '@/utils';
 import { XrplClient } from 'xrpl-client';
 import { amendments, getAmendmentName } from '@/data/amendments';
+
+const RIPPLE_EPOCH_DIFF = 0x386d4380
 
 const protocols = getKeys(NETWORKS)
 const networkData = protocols.flatMap((protocol) => {
@@ -26,7 +31,11 @@ const networkData = protocols.flatMap((protocol) => {
 })
 const protocolName = (protocol: typeof networkData[number]['protocol']) => protocol === 'xrpl' ? 'XRPL' : protocol === 'xahau' ? 'Xahau' : protocol
 const getNetworkKey = (network: typeof networkData[number]) => `${protocolName(network.protocol)}-${network.name}`
-const initialNetworkAmendment = amendments.reverse().reduce<Record<string, Record<string, Record<'enabled' | 'majority', boolean>>>>((prevAm, curAm) => ({ ...prevAm, [curAm]: networkData.reduce((prev, cur) => ({ ...prev, [getNetworkKey(cur)]: { enabled: false, majority: false } }), {}) }), {})
+const initialNetworkAmendment = amendments.reverse().reduce<Record<string, Record<string, Record<'enabled' | 'majority', boolean> & { closeTime: number | undefined }>>>((prevAm, curAm) => ({ ...prevAm, [curAm]: networkData.reduce((prev, cur) => ({ ...prev, [getNetworkKey(cur)]: { enabled: false, majority: false, closeTime: undefined } }), {}) }), {})
+
+const rippleTimeToUnixTime = (rpepoch: number) => {
+  return (rpepoch + RIPPLE_EPOCH_DIFF) * 1000
+}
 
 export default function Home() {
   const [networkAmendments, setNetworkAmendments] = useState(initialNetworkAmendment)
@@ -68,7 +77,7 @@ export default function Home() {
                 if (!hasAmendment) {
                   return { [amendmentName]: networkData.reduce((prev, cur) => ({ ...prev, [getNetworkKey(cur)]: { enabled: false, majority: getNetworkKey(network) === getNetworkKey(cur) } }), {}), ...prevState }
                 } else {
-                  return { ...prevState, [amendmentName]: { ...prevState[amendmentName], [getNetworkKey(network)]: { enabled: false, majority: true } } }
+                  return { ...prevState, [amendmentName]: { ...prevState[amendmentName], [getNetworkKey(network)]: { enabled: false, majority: true, closeTime: majority.Majority.CloseTime } } }
                 }
               })
             })
@@ -107,7 +116,26 @@ export default function Home() {
               <TableRow key={amendmentId}>
                 {...[<TableCell key='name'>{amendmentId}</TableCell>, ...getKeys(networkAmendments[amendmentId]).map((networkKey) => {
                   const status = networkAmendments[amendmentId][networkKey]
-                  return <TableCell className='text-center' key={networkKey}>{status.enabled ? '✅' : status.majority ? '🗳️' : ''}</TableCell>
+
+                  const enableDatatimeStr = () => {
+                    if (!status.closeTime) return null
+                    let close = new Date(rippleTimeToUnixTime(status.closeTime))
+                    if (networkKey.includes('xahau'))
+                      close.setDate(close.getDate() + 5)
+                    else
+                      close.setDate(close.getDate() + 14)
+                    return close.toLocaleString()
+                  }
+
+                  return (
+                    <TableCell className='text-center' key={networkKey}>
+                      <Tooltip isDisabled={!status.majority} content={enableDatatimeStr()} closeDelay={50}>
+                        <button disabled className='p-2 px-4 -m-2'>
+                          {status.enabled ? '✅' : status.majority ? '🗳️' : ''}
+                        </button>
+                      </Tooltip>
+                    </TableCell>
+                  )
                 })]
                 }
               </TableRow>
