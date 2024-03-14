@@ -7,9 +7,7 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-  Tx,
   Tooltip,
-  Button
 } from "@nextui-org/react";
 import { NETWORKS } from '@/data/networks';
 import { getKeys } from '@/utils';
