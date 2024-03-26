@@ -118,7 +118,7 @@ export default function Home() {
                   const enableDatatimeStr = () => {
                     if (!status.closeTime) return null
                     let close = new Date(rippleTimeToUnixTime(status.closeTime))
-                    if (networkKey.includes('xahau'))
+                    if (networkKey.toLowerCase().includes('xahau'))
                       close.setDate(close.getDate() + 5)
                     else
                       close.setDate(close.getDate() + 14)
