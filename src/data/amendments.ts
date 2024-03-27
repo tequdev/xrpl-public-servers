@@ -90,6 +90,7 @@ export const amendments = [
   "fixNFTokenReserve",
   "fixInnerObjTemplate",
   "PriceOracle",
+  "fixAMMOverflowOffer",
   ...xahau
 ]
 
