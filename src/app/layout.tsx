@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Provider } from './Provider'
 import Header from '@/components/Header'
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
   title: 'XRP Ledger Public Servers',
@@ -19,6 +20,7 @@ export default function RootLayout({
         <body className='dark text-foreground bg-background'>
           <Header />
           {children}
+          <Analytics />
         </body>
       </Provider>
     </html>
