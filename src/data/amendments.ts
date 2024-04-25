@@ -33,9 +33,11 @@ const xahau = [
   "Import",
   "XahauGenesis",
   "HooksUpdate1",
-  "fixXahauV1",  
+  "fixXahauV1",
   "fixXahauV2",
   "Remit",
+  "ZeroB2M",
+  "fixNSDelete",
 ]
 
 export const amendments = [
