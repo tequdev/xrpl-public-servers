@@ -93,6 +93,10 @@ export const amendments = [
   "fixInnerObjTemplate",
   "PriceOracle",
   "fixAMMOverflowOffer",
+  "fixEmptyDID",
+  "fixXChainRewardRounding",
+  "fixPreviousTxnID",
+  "fixAMMv1_1",
   ...xahau
 ]
 
