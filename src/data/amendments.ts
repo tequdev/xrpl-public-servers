@@ -97,6 +97,9 @@ export const amendments = [
   "fixXChainRewardRounding",
   "fixPreviousTxnID",
   "fixAMMv1_1",
+  "NFTokenMintOffer",
+  "fixReducedOffersV2",
+  "fixEnforceNFTokenTrustline",
   ...xahau
 ]
 
