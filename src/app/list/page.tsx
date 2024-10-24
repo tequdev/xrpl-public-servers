@@ -38,7 +38,6 @@ export default function Home() {
     networkData.forEach(network => {
       const client = new XrplClient(network.server)
       const _1 = client.ready().then(() => {
-        console.log(client.getState())
         setNetworkVersion((curr) => ({ ...curr, [getNetworkKey(network)]: client.getState().server.version }))
         return
       })
@@ -59,7 +58,6 @@ export default function Home() {
             })
           })
           ; ((Majorities || []) as Record<'Majority',{ Amendment: string, CloseTime: number }>[]).forEach((majority) => {
-            console.log({majority})
             const amendmentName = getAmendmentName(majority.Majority.Amendment)
             setNetworkAmendments((prevState) => {
               const hasAmendment = (amendmentName in prevState)

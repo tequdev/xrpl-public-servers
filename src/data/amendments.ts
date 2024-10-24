@@ -38,6 +38,9 @@ const xahau = [
   "Remit",
   "ZeroB2M",
   "fixNSDelete",
+  "fix240819",
+  "fixPageCap",
+  "fix240911",
 ]
 
 export const amendments = [
@@ -103,12 +106,15 @@ export const amendments = [
   ...xahau
 ]
 
-const amendmentInfo = amendments.reduce((prev, curr) => {
+export const amendmentInfo = amendments.reduce((prev, curr) => {
   return { ...prev, [crypto.createHash('sha512').update(curr).digest('hex').slice(0, 64).toUpperCase()]: curr }
 }, {} as Record<string, string>)
 
 
 export const getAmendmentName = (id: string) => {
-  console.log(amendmentInfo[id.replace('\"', "")] || id)
   return amendmentInfo[id.replace('\"', "")] || id
+}
+
+export const getAmendmentId = (name: string) => {
+  return Object.keys(amendmentInfo).find((id) => amendmentInfo[id] === name) || name
 }

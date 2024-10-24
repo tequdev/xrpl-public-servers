@@ -12,7 +12,7 @@ import {
 import { NETWORKS } from '@/data/networks';
 import { getKeys } from '@/utils';
 import { XrplClient } from 'xrpl-client';
-import { amendments, getAmendmentName } from '@/data/amendments';
+import { amendments, getAmendmentName, getAmendmentId } from '@/data/amendments';
 
 const RIPPLE_EPOCH_DIFF = 0x386d4380
 
@@ -46,7 +46,6 @@ export default function Home() {
       const client = new XrplClient(network.server)
       try {
         const _1 = client.ready().then(() => {
-          console.log(client.getState())
           setNetworkVersion((curr) => ({ ...curr, [getNetworkKey(network)]: client.getState().server.version }))
           return
         })
@@ -55,7 +54,6 @@ export default function Home() {
           index: '7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4'
         }).then((res => {
           const { Majorities, Amendments } = res.node
-          console.log(Amendments)
             ; (Amendments as string[]).forEach((amendmentId) => {
               const amendmentName = getAmendmentName(amendmentId)
               setNetworkAmendments((prevState) => {
@@ -68,7 +66,6 @@ export default function Home() {
               })
             })
             ; ((Majorities || []) as Record<'Majority', { Amendment: string, CloseTime: number }>[]).forEach((majority) => {
-              console.log({ majority })
               const amendmentName = getAmendmentName(majority.Majority.Amendment)
               setNetworkAmendments((prevState) => {
                 const hasAmendment = (amendmentName in prevState)
@@ -112,7 +109,7 @@ export default function Home() {
             </TableRow>
             , ...getKeys(networkAmendments).map((amendmentId) =>
               <TableRow key={amendmentId}>
-                {...[<TableCell key='name'>{amendmentId}</TableCell>, ...getKeys(networkAmendments[amendmentId]).map((networkKey) => {
+                {...[<TableCell key='name' content={getAmendmentId(amendmentId)}>{amendmentId}</TableCell>, ...getKeys(networkAmendments[amendmentId]).map((networkKey) => {
                   const status = networkAmendments[amendmentId][networkKey]
 
                   const enableDatatimeStr = () => {
