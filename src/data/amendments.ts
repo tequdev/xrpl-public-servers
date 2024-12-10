@@ -41,6 +41,7 @@ const xahau = [
   "fix240819",
   "fixPageCap",
   "fix240911",
+  "fixFloatDivide"
 ]
 
 export const amendments = [
@@ -103,6 +104,13 @@ export const amendments = [
   "NFTokenMintOffer",
   "fixReducedOffersV2",
   "fixEnforceNFTokenTrustline",
+  "fixInnerObjTemplate2",
+  "fixNFTokenPageLinks",
+  "InvariantsV1_1",
+  "MPTokensV1",
+  "fixAMMv1_2",
+  "AMMClawback",
+  "Credentials",
   ...xahau
 ]
 
