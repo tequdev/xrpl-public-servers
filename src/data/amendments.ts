@@ -42,11 +42,11 @@ const xahau = [
   "fixPageCap",
   "fix240911",
   "fixFloatDivide",
-  "Remarks",
-  "Touch",
   "fixReduceImport",
   "fixXahauV3",
   "fix20250131",
+  "Remarks",
+  "Touch",
   "HookCanEmit",
   "fixRewardClaimFlags",
 ]
