@@ -41,7 +41,14 @@ const xahau = [
   "fix240819",
   "fixPageCap",
   "fix240911",
-  "fixFloatDivide"
+  "fixFloatDivide",
+  "Remarks",
+  "Touch",
+  "fixReduceImport",
+  "fixXahauV3",
+  "fix20250131",
+  "HookCanEmit",
+  "fixRewardClaimFlags",
 ]
 
 export const amendments = [
@@ -111,6 +118,11 @@ export const amendments = [
   "fixAMMv1_2",
   "AMMClawback",
   "Credentials",
+  "DynamicNFT",
+  "PermissionedDomains",
+  "DeepFreeze",
+  "fixFrozenLPTokenTransfer",
+  "fixInvalidTxFlags",
   ...xahau
 ]
 
