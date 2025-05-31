@@ -123,6 +123,10 @@ export const amendments = [
   "DeepFreeze",
   "fixFrozenLPTokenTransfer",
   "fixInvalidTxFlags",
+  "PayChanCancelAfter",
+  "PermissionDelegation",
+  "SingleAssetVault",
+  "Batch",
   ...xahau
 ]
 
