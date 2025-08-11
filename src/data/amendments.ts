@@ -49,6 +49,8 @@ const xahau = [
   "Touch",
   "HookCanEmit",
   "fixRewardClaimFlags",
+  "fixProvisionalDoubleThreading",
+  "IOUIssuerWeakTSH",
 ]
 
 export const amendments = [
@@ -127,6 +129,11 @@ export const amendments = [
   "PermissionDelegation",
   "SingleAssetVault",
   "Batch",
+  "fixPayChanCancelAfter",
+  "fixAMMv1_3",
+  "TokenEscrow",
+  "PermissionedDEX",
+  "fixEnforceNFTokenTrustlineV2",
   ...xahau
 ]
 
